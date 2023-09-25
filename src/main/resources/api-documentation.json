@@ -1,0 +1,624 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Generated server url"
+        }
+    ],
+    "paths": {
+        "/users/leave/chat-room": {
+            "put": {
+                "tags": [
+                    "user-controller"
+                ],
+                "operationId": "leaveChatRoom",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JoinOrLeaveChatRoomRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JoinOrLeaveChatRoomResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/join/chat-room": {
+            "put": {
+                "tags": [
+                    "user-controller"
+                ],
+                "operationId": "joinChatRoom",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JoinOrLeaveChatRoomRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JoinOrLeaveChatRoomResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "tags": [
+                    "user-controller"
+                ],
+                "operationId": "createUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUserRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateUserResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/text-message": {
+            "post": {
+                "tags": [
+                    "message-controller"
+                ],
+                "operationId": "sendTextMessage",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendTextMessageRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SendTextMessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/file-message": {
+            "post": {
+                "tags": [
+                    "message-controller"
+                ],
+                "operationId": "sendFileMessage",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "chat-room-id",
+                                    "content-type",
+                                    "file",
+                                    "password",
+                                    "username"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "chat-room-id": {
+                                        "type": "integer",
+                                        "format": "int64"
+                                    },
+                                    "content-type": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SendFileMessageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/chat-rooms": {
+            "post": {
+                "tags": [
+                    "chat-room-controller"
+                ],
+                "operationId": "createChatRoom",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChatRoomRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatRoomResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/message/chat-room/{chatRoomId}": {
+            "get": {
+                "tags": [
+                    "message-controller"
+                ],
+                "operationId": "getMessageByUserAndChatRoom",
+                "parameters": [
+                    {
+                        "name": "credential",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Credential"
+                        }
+                    },
+                    {
+                        "name": "chatRoomId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetMessageByUserAndChatRoomResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/chat-rooms/current-user": {
+            "get": {
+                "tags": [
+                    "chat-room-controller"
+                ],
+                "operationId": "getChatRoomsByUser",
+                "parameters": [
+                    {
+                        "name": "credential",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Credential"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatRoomListResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/chat-rooms/all": {
+            "get": {
+                "tags": [
+                    "chat-room-controller"
+                ],
+                "operationId": "viewAllChatRooms",
+                "parameters": [
+                    {
+                        "name": "getAllChatRoomsRequest",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/GetAllChatRoomsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatRoomListResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Credential": {
+                "required": [
+                    "password",
+                    "username"
+                ],
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "JoinOrLeaveChatRoomRequest": {
+                "required": [
+                    "chatRoomId"
+                ],
+                "type": "object",
+                "properties": {
+                    "chatRoomId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "credential": {
+                        "$ref": "#/components/schemas/Credential"
+                    }
+                }
+            },
+            "BasicChatRoomInfo": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "BasicUserInfo": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    }
+                }
+            },
+            "JoinOrLeaveChatRoomResponse": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "$ref": "#/components/schemas/BasicUserInfo"
+                    },
+                    "chatRoom": {
+                        "$ref": "#/components/schemas/BasicChatRoomInfo"
+                    }
+                }
+            },
+            "CreateUserRequest": {
+                "required": [
+                    "firstName",
+                    "lastName",
+                    "password",
+                    "username"
+                ],
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CreateUserResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SendTextMessageRequest": {
+                "type": "object",
+                "properties": {
+                    "chatRoomId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "contentType": {
+                        "type": "string",
+                        "enum": [
+                            "TEXT",
+                            "VIDEO",
+                            "FILE",
+                            "PICTURE"
+                        ]
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "credential": {
+                        "$ref": "#/components/schemas/Credential"
+                    }
+                }
+            },
+            "BasicTextMessageInfo": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "contentType": {
+                        "type": "string",
+                        "enum": [
+                            "TEXT",
+                            "VIDEO",
+                            "FILE",
+                            "PICTURE"
+                        ]
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "createdOn": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "SendTextMessageResponse": {
+                "type": "object",
+                "properties": {
+                    "sender": {
+                        "$ref": "#/components/schemas/BasicUserInfo"
+                    },
+                    "chatRoom": {
+                        "$ref": "#/components/schemas/BasicChatRoomInfo"
+                    },
+                    "message": {
+                        "$ref": "#/components/schemas/BasicTextMessageInfo"
+                    }
+                }
+            },
+            "BasicFileMessageInfo": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "contentType": {
+                        "type": "string",
+                        "enum": [
+                            "TEXT",
+                            "VIDEO",
+                            "FILE",
+                            "PICTURE"
+                        ]
+                    },
+                    "filePath": {
+                        "type": "string"
+                    },
+                    "createdOn": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "SendFileMessageResponse": {
+                "type": "object",
+                "properties": {
+                    "sender": {
+                        "$ref": "#/components/schemas/BasicUserInfo"
+                    },
+                    "chatRoom": {
+                        "$ref": "#/components/schemas/BasicChatRoomInfo"
+                    },
+                    "message": {
+                        "$ref": "#/components/schemas/BasicFileMessageInfo"
+                    }
+                }
+            },
+            "ChatRoomRequest": {
+                "required": [
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "credential": {
+                        "$ref": "#/components/schemas/Credential"
+                    }
+                }
+            },
+            "ChatRoomResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GetMessageByUserAndChatRoomResponse": {
+                "type": "object",
+                "properties": {
+                    "sender": {
+                        "$ref": "#/components/schemas/BasicUserInfo"
+                    },
+                    "chatRoom": {
+                        "$ref": "#/components/schemas/BasicChatRoomInfo"
+                    },
+                    "messages": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MessageDto"
+                        }
+                    }
+                }
+            },
+            "MessageDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "contentType": {
+                        "type": "string",
+                        "enum": [
+                            "TEXT",
+                            "VIDEO",
+                            "FILE",
+                            "PICTURE"
+                        ]
+                    },
+                    "filePath": {
+                        "type": "string"
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "createdOn": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ChatRoomListResponse": {
+                "type": "object",
+                "properties": {
+                    "chatRooms": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BasicChatRoomInfo"
+                        }
+                    }
+                }
+            },
+            "GetAllChatRoomsRequest": {
+                "type": "object",
+                "properties": {
+                    "credential": {
+                        "$ref": "#/components/schemas/Credential"
+                    }
+                }
+            }
+        }
+    }
+}

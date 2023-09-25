@@ -65,7 +65,7 @@ public class MessageServiceImp implements MessageService {
         Message message = dataMapper.SendFileMessageDtoToMessageEntity(chatRoomId, contentType, path.toAbsolutePath().toString());
         message = messageRepository.save(message);
 
-        fileHelper.upload(file, path);
+        fileHelper.upload(file, path, contentType);
 
         return dataMapper.messageEntityToSendFileMessageDto(message);
     }
